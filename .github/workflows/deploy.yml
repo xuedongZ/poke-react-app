@@ -8,7 +8,7 @@ on:
       - master
 jobs:
   # 单次部署的工作描述
-  build and deploy:
+  build-and-deploy:
     runs-on: ubuntu-latest
     permissions:
       contents: write
