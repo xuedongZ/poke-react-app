@@ -19,5 +19,6 @@
   margin-bottom: 26px;
   .card-img {
     background-color: rgb(240, 242, 245);
+    height: 102px;
   }
 }
