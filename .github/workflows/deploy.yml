@@ -36,7 +36,7 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-         run: |
+        run: |
           npm i -g pnpm
           pnpm run init
           pnpm run build
