@@ -83,7 +83,8 @@ function App() {
           name: item?.name,
           order: innerList[index]?.order,
           id: innerList[index]?.id,
-          image: innerList[index]?.sprites?.back_default
+          image: innerList[index]?.sprites?.back_default,
+          error: innerList[index]?.id ? false : true
         }
       })
       updateData({ list: myUIdata, total: outerRes.count })
@@ -115,7 +116,10 @@ function App() {
           return (
             <div key={item.id} className='card-item'  >
               <Card style={{ width: 260, borderWidth: 2 }}>
-                <div className='card-img'><img src={item?.image || viteLogo} /></div>
+                <div className='card-img'>
+                  <img src={item?.image || viteLogo} />
+                  {item.error && 'api error'}
+                </div>
                 <p>{item.name}</p>
                 <div>#{item.id}</div>
               </Card>
