@@ -6,5 +6,18 @@
 }
 
 .card-group-wraper {
+  width: 100%;
   display: flex;
+  justify-content: center;
+  overflow-x: hidden;
+  flex-wrap: wrap;
+}
+
+.card-item {
+  display: inline-block;
+  flex: 0 1 25%;
+  margin-bottom: 26px;
+  .card-img {
+    background-color: rgb(240, 242, 245);
+  }
 }

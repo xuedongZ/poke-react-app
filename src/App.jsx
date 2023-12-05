@@ -52,9 +52,15 @@ function App() {
       <div className='card-group-wraper'>
         {list && list.length && list.map((item) => {
           return (
-            <Card key={item.id} style={{ width: 300 }}>
-              <p><img src={item.image} /></p>
-            </Card>
+            <div key={item.id} className='card-item'  >
+              <Card style={{ width: 260, borderWidth: 2 }}>
+                <p className='card-img'><img src={item.image} /></p>
+                <p>{item.name}</p>
+                <div>#{item.id}</div>
+              </Card>
+              
+            </div>
+
           )
         })}
       </div>
