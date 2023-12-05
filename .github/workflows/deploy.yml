@@ -23,9 +23,6 @@ concurrency:
 jobs:
   # 单次部署的工作描述
   deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -33,9 +30,9 @@ jobs:
       - name: Set up Node
         uses: actions/setup-node@v3
         with:
-          node-version: 18
+          node-version: 20.10.0
 
-      - name: Install dependencies
+      - name: Install and build
         run: |
           npm i -g pnpm
           pnpm install
