@@ -54,55 +54,17 @@ function App() {
     } finally {
       setLoading(false)
     }
-
   }
 
-  const fetchBathList = async () => {
-    setLoading(true)
-    try {
-
-      let response = await fetch(LIST_BASE_URL)
-      let outerRes = await response.json()
-      let outerList = outerRes.results
-      console.log(outerRes, 'outerList');
-
-      let innerList = await Promise.allSettled(outerList.map((async item => {
-        let res1 = await fetch(item.url)
-        console.log(res1, 'res1');
-        let res1data = await res1.json()
-        return res1data
-      })))
-
-      innerList = innerList.map(item => item.value)
-
-      console.log(innerList, 'innerList-zz');
-
-
-      const myUIdata = outerList.map((item, index) => {
-        return {
-          name: item?.name,
-          order: innerList[index]?.order,
-          id: innerList[index]?.id,
-          image: innerList[index]?.sprites?.back_default,
-          error: innerList[index]?.id ? false : true
-        }
-      })
-      updateData({ list: myUIdata, total: outerRes.count })
-
-    } catch (error) {
-      console.log(error, 'zz-err');
-    } finally {
-      setLoading(false)
-    }
-
-  }
 
   const onChange = (page) => {
     fetchListByPape(page)
   }
 
   useEffect(() => {
-    fetchBathList()
+    // fetchBathList()
+    let page = 1
+    fetchListByPape(page)
   }, [])
 
   if (loading) {
