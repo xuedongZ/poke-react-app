@@ -13,6 +13,7 @@ const initData = {
 
 function App() {
   const [data, setData] = useState(initData)
+  const [loading, setLoading] = useState(true)
 
   const updateData = (value = {}) => {
     setData(prev => ({
@@ -23,6 +24,7 @@ function App() {
   }
 
   const fetchListByPape = async (page = 0) => {
+    setLoading(true)
     try {
 
       let response = await fetch(`${LIST_BASE_URL}?offset=${(page - 1) * 20}limit=20`)
@@ -45,16 +47,18 @@ function App() {
           image: innerList[index]?.sprites?.back_default
         }
       })
-      updateData({ list: myUIdata, total: outerRes.count })
+      updateData({ list: myUIdata, total: outerRes.count, pageNo: page })
 
     } catch (error) {
       console.log(error, 'zz-err');
-
+    } finally {
+      setLoading(false)
     }
 
   }
 
   const fetchBathList = async () => {
+    setLoading(true)
     try {
 
       let response = await fetch(LIST_BASE_URL)
@@ -86,7 +90,8 @@ function App() {
 
     } catch (error) {
       console.log(error, 'zz-err');
-
+    } finally {
+      setLoading(false)
     }
 
   }
@@ -99,10 +104,14 @@ function App() {
     fetchBathList()
   }, [])
 
+  if (loading) {
+    return 'loading...'
+  }
+
   return (
     <>
       <div className='card-group-wraper'>
-        {data.list && data.list.length && data.list.map((item) => {
+        {data.list && data.list.length > 0 && data.list.map((item) => {
           return (
             <div key={item.id} className='card-item'  >
               <Card style={{ width: 260, borderWidth: 2 }}>
@@ -115,12 +124,13 @@ function App() {
         })}
       </div>
 
-      <Pagination 
-        defaultPageSize={20} 
-        showQuickJumper 
-        defaultCurrent={1} 
-        total={data?.total} 
-        onChange={onChange} 
+      <Pagination
+        defaultPageSize={20}
+        showQuickJumper
+        defaultCurrent={1}
+        current={data.pageNo}
+        total={data?.total}
+        onChange={onChange}
         showSizeChanger={false} />
     </>
   )
